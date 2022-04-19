@@ -1,7 +1,10 @@
 const fs = require('fs');
 
+const INPUT_FILE_NAME = 'james-worden-journal.txt';
+const OUTPUT_FILE_NAME = 'james-worden-journal-data.json';
+
 // Read text file as a string
-const fileContents = fs.readFileSync('james-worden-journal.txt', 'utf-8');
+const fileContents = fs.readFileSync(INPUT_FILE_NAME, 'utf-8');
 
 // Example: "12:07 AM Thursday, Sept 13th"
 const titleRegex = new RegExp(
@@ -27,7 +30,7 @@ for (let i = 0; i < entryContentsFromFile.length; i++) {
 const jsonStringWithTabsAndEnters = JSON.stringify(entries);
 const jsonString = jsonStringWithTabsAndEnters.replace(/\\n|\\r/g, '');
 
-fs.writeFile('james-worden-journal-data.json', jsonString, (err) => {
+fs.writeFile(OUTPUT_FILE_NAME, jsonString, (err) => {
 	if (err) throw err;
 	console.log('Saved journal data.');
 });
