@@ -1,6 +1,7 @@
 const fs = require('fs');
+const chrono = require('chrono-node');
 
-const entries = require('./james-worden-journal-data.json');
+const entries = require('./entries.json');
 
 const computerKeywords = [
 	'computer',
@@ -45,29 +46,11 @@ entries.forEach(({ content, title }) => {
 		}
 	}
 
-	const dateRegex =
-		/(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sept(?:ember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+\d{1,2}.*\d{4}.*$/gim;
-	const dateString = title.match(dateRegex);
-	const date = dateString ? dateString[0] : null;
-
-	const timeRegex = /(?:0?[1-9]|1[0-2]):(?:[0-5]\d)\s?(?:(?:A|P)\.?M\.?).*$/gim;
-	const timeString = title.match(timeRegex);
-	const timeWithExcessData = timeString ? timeString[0] : null;
-
-	// Cut off string after the 'M' in AM or PM
-	let mIndex = 0;
-	for (let i = 0; i < timeWithExcessData.length; i++) {
-		const char = timeWithExcessData[i];
-		if (char.toLocaleLowerCase() == 'm') {
-			mIndex = i;
-			break;
-		}
-	}
-	const time = timeWithExcessData.substring(0, mIndex + 1);
+	// Use chrono library to extract date and time from string
+	const dateTime = chrono.parseDate(title).toISOString();
 
 	entriesWithStats.push({
-		date,
-		time,
+		dateTime,
 		numCharacters,
 		numWords,
 		avgCharsPerWord,
@@ -79,7 +62,7 @@ entries.forEach(({ content, title }) => {
 
 const jsonString = JSON.stringify(entriesWithStats);
 
-fs.writeFile('journal-statistics.json', jsonString, (err) => {
+fs.writeFile('stats.json', jsonString, (err) => {
 	if (err) throw err;
 	console.log('Saved journal data.');
 });
