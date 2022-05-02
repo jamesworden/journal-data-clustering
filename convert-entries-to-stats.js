@@ -35,6 +35,31 @@ const hardwareKeywords = [
 
 const jobKeywords = ['work', 'pay', 'hours', 'money', 'job', 'meeting', 'email'];
 
+const pronounKeywords = [
+	'i',
+	'we',
+	'you',
+	'he',
+	'she',
+	'it',
+	'they',
+	'me',
+	'us',
+	'her',
+	'him',
+	'them',
+	'mine',
+	'ours',
+	'yours',
+	'hers',
+	'his',
+	'theirs',
+	'my',
+	'our',
+	'your',
+	'their',
+];
+
 const entriesWithStats = [];
 
 entries.forEach(({ content, title }) => {
@@ -55,6 +80,9 @@ entries.forEach(({ content, title }) => {
 	).length;
 	const numJobKeywords = words.filter((word) =>
 		jobKeywords.includes(word.toLocaleLowerCase())
+	).length;
+	const numPronouns = words.filter((word) =>
+		pronounKeywords.includes(word.toLocaleLowerCase())
 	).length;
 
 	let numExclaimationPoints = 0;
@@ -78,6 +106,7 @@ entries.forEach(({ content, title }) => {
 		numHardwareKeywords,
 		numJobKeywords,
 		numExclaimationPoints,
+		numPronouns,
 	});
 });
 
