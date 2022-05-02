@@ -3,9 +3,7 @@ const chrono = require('chrono-node');
 
 const entries = require('./entries.json');
 
-const computerKeywords = [
-	'computer',
-	'laptop',
+const softwareKeywords = [
 	'java',
 	'javascript',
 	'typescript',
@@ -13,7 +11,6 @@ const computerKeywords = [
 	'program',
 	'coding',
 	'code',
-	'solve',
 	'html',
 	'css',
 	'js',
@@ -22,6 +19,21 @@ const computerKeywords = [
 	'frontend',
 	'database',
 ];
+
+const hardwareKeywords = [
+	'computer',
+	'laptop',
+	'battery',
+	'mouse',
+	'keyboard',
+	'monitor',
+	'monitors',
+	'screen',
+	'screens',
+	'desk',
+];
+
+const jobKeywords = ['work', 'pay', 'hours', 'money', 'job', 'meeting', 'email'];
 
 const entriesWithStats = [];
 
@@ -34,8 +46,15 @@ entries.forEach(({ content, title }) => {
 	const avgWordLengthNotRounded = sumOfWordLengths / numWords;
 	const avgCharsPerWord = Number(avgWordLengthNotRounded.toFixed(2));
 	const numTenCharOrMoreWords = words.filter((word) => word.length >= 10).length;
-	const numComputerKeywords = words.filter((word) =>
-		computerKeywords.includes(word.toLocaleLowerCase())
+
+	const numSoftwareKeywords = words.filter((word) =>
+		softwareKeywords.includes(word.toLocaleLowerCase())
+	).length;
+	const numHardwareKeywords = words.filter((word) =>
+		hardwareKeywords.includes(word.toLocaleLowerCase())
+	).length;
+	const numJobKeywords = words.filter((word) =>
+		jobKeywords.includes(word.toLocaleLowerCase())
 	).length;
 
 	let numExclaimationPoints = 0;
@@ -55,7 +74,9 @@ entries.forEach(({ content, title }) => {
 		numWords,
 		avgCharsPerWord,
 		numTenCharOrMoreWords,
-		numComputerKeywords,
+		numSoftwareKeywords,
+		numHardwareKeywords,
+		numJobKeywords,
 		numExclaimationPoints,
 	});
 });
