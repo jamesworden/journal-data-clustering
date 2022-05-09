@@ -11,7 +11,8 @@
 	"scripts": {
 		"convert-journal-to-entries": "node convert-journal-to-entries",
 		"convert-entries-to-stats": "node convert-entries-to-stats",
-		"convert-stats-to-csv": "node convert-stats-to-csv"
+		"convert-stats-to-csv": "node convert-stats-to-csv",
+		"convert-entries-to-csv": "node convert-entries-to-csv"
 	},
 	"author": "",
 	"license": "ISC"
